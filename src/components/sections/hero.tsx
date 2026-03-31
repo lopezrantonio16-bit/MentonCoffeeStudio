@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { CoffeeModel } from "@/components/coffee-model";
 import { springs } from "@/lib/motion";
 
 const MotionButton = motion.create(Button);
@@ -35,11 +36,7 @@ export function Hero() {
             transition={{ ...springs.smooth, delay: prefersReducedMotion ? 0 : 0.05 }}
             className="order-1 md:order-1"
           >
-            <div className="aspect-[3/4] rounded-lg border border-border bg-muted flex items-center justify-center">
-              <span className="text-sm text-muted-foreground select-none">
-                Product Photo
-              </span>
-            </div>
+            <CoffeeModel />
           </motion.div>
 
           {/* Text + CTA — subordinate, right */}
