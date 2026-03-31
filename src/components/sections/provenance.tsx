@@ -15,7 +15,7 @@ export function Provenance() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="px-6 py-16 md:py-24">
+    <section className="px-6 pt-8 pb-16 md:pt-10 md:pb-20">
       <div className="mx-auto max-w-4xl">
         <h2 className="text-sm font-medium text-muted-foreground mb-8">
           Origin

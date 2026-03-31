@@ -51,6 +51,11 @@
   --font-sans: var(--font-geist-sans);
 }
 
+html,
+body {
+  overscroll-behavior: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

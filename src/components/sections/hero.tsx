@@ -26,9 +26,9 @@ export function Hero() {
   const imageVisible = { opacity: 1, scale: 1 };
 
   return (
-    <section className="px-6 pt-24 pb-16 md:pt-32 md:pb-24">
+    <section className="px-6 pt-16 pb-8 md:pt-24 md:pb-10">
       <div className="mx-auto max-w-4xl">
-        <div className="grid gap-12 md:grid-cols-2 md:gap-16 items-center">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-12 items-center">
           {/* Product image — dominant, left */}
           <motion.div
             initial={imageInitial}
