@@ -30,7 +30,7 @@ export function CoffeeModel() {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="aspect-[4/5] max-w-sm mx-auto overflow-hidden relative">
+    <div className="aspect-square md:aspect-[4/5] max-w-2xl mx-auto overflow-hidden relative">
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="h-5 w-5 rounded-full border-2 border-foreground/20 border-t-foreground/60 animate-spin" />

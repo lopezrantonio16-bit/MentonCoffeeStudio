@@ -15,9 +15,9 @@ export function Provenance() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="px-6 pt-8 pb-16 md:pt-10 md:pb-20">
+    <section className="px-6 pt-6 pb-16 md:pt-6 md:pb-20">
       <div className="mx-auto max-w-4xl">
-        <h2 className="text-sm font-medium text-muted-foreground mb-8">
+        <h2 className="text-sm font-medium text-muted-foreground mb-5">
           Origin
         </h2>
 
