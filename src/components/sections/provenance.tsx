@@ -15,13 +15,13 @@ export function Provenance() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="px-6 pt-6 pb-16 md:pt-6 md:pb-20">
+    <section className="px-6 pt-2 pb-16 md:pb-0">
       <div className="mx-auto max-w-4xl">
-        <h2 className="text-sm font-medium text-muted-foreground mb-5">
+        <h2 className="text-sm font-medium text-muted-foreground mb-3">
           Origin
         </h2>
 
-        <div className="grid gap-12 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3">
           {/* Narrative — wide left, 2/3 */}
           <div className="md:col-span-2">
             <p className="text-base leading-relaxed text-muted-foreground">
@@ -43,7 +43,7 @@ export function Provenance() {
             transition={{ ...springs.gentle }}
             className="border-l border-border pl-6"
           >
-            <dl className="space-y-4">
+            <dl className="space-y-3">
               {facts.map((fact) => (
                 <div key={fact.label}>
                   <dt className="text-sm text-muted-foreground">
