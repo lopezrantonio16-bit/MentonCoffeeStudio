@@ -181,7 +181,7 @@ export function Hero() {
                               style={{
                                 width: "100%",
                                 height: "100%",
-                                borderRadius: "0.5rem",
+                                borderRadius: "var(--radius-lg)",
                               }}
                             />
                           </motion.div>
