@@ -131,7 +131,7 @@ export function Hero() {
                       animate={{ opacity: 1, scale: 1, width: "8.5rem" }}
                       exit={{ opacity: 0, scale: 0.95, width: 0 }}
                       transition={interactionSpring}
-                      className="relative h-10 overflow-hidden"
+                      className="relative h-10 overflow-hidden rounded-lg"
                     >
                       <AnimatePresence mode="wait">
                         {cartState === "quantity" && (
@@ -179,9 +179,9 @@ export function Hero() {
                               type="pay"
                               buttonStyle="black"
                               style={{
-                                width: "100%",
-                                height: "100%",
-                                borderRadius: "var(--radius-lg)",
+                                width: "8.5rem",
+                                height: "2.5rem",
+                                borderRadius: "0px",
                               }}
                             />
                           </motion.div>
