@@ -87,11 +87,11 @@ export function Hero() {
               className="flex items-center gap-5 sm:gap-6"
             >
               <span className="text-3xl font-bold tracking-tight">$24</span>
-              <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                 <MotionButton
                   size="lg"
                   transition={interactionSpring}
-                  className={`cursor-pointer w-32 sm:w-[8.5rem] transition-colors duration-200 ${
+                  className={`cursor-pointer flex-1 min-w-0 sm:w-[8.5rem] sm:flex-none transition-colors duration-200 ${
                     cartState === "ready"
                       ? "!bg-[#6366f1] hover:!bg-[#4f46e5]"
                       : ""
@@ -128,7 +128,7 @@ export function Hero() {
                     opacity: cartState !== "idle" ? 1 : 0,
                   }}
                   transition={interactionSpring}
-                  className={`relative h-10 w-32 sm:w-[8.5rem] overflow-hidden rounded-lg ${
+                  className={`relative h-10 flex-1 min-w-0 sm:w-[8.5rem] sm:flex-none overflow-hidden rounded-lg ${
                     cartState === "idle" ? "pointer-events-none" : ""
                   }`}
                 >
