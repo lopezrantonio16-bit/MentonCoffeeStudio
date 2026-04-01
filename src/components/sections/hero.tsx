@@ -12,6 +12,8 @@ const MotionButton = motion.create(Button);
 
 type CartState = "idle" | "quantity" | "ready";
 
+const interactionSpring = { type: "spring" as const, stiffness: 300, damping: 30 };
+
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const [cartState, setCartState] = useState<CartState>("idle");
@@ -48,6 +50,11 @@ export function Hero() {
 
           {/* Text + CTA — subordinate, right */}
           <div className="order-2 md:order-2 flex flex-col gap-5">
+            {/* Trust strip — mobile only, above title */}
+            <div className="md:hidden">
+              <Trust />
+            </div>
+
             <motion.div
               initial={initial}
               animate={animate ?? visible}
@@ -80,10 +87,12 @@ export function Hero() {
               className="flex items-center gap-6"
             >
               <span className="text-3xl font-bold tracking-tight">$24</span>
-              <div className="flex items-center gap-3">
+              <motion.div layout transition={interactionSpring} className="flex items-center gap-3">
                 <MotionButton
+                  layout
                   size="lg"
-                  className={`cursor-pointer min-w-[7rem] transition-colors duration-200 ${
+                  transition={interactionSpring}
+                  className={`cursor-pointer w-[8.5rem] h-10 transition-colors duration-200 ${
                     cartState === "ready"
                       ? "!bg-[#6366f1] hover:!bg-[#4f46e5]"
                       : ""
@@ -114,65 +123,76 @@ export function Hero() {
                     </motion.span>
                   </AnimatePresence>
                 </MotionButton>
-                <AnimatePresence mode="wait">
-                  {(cartState === "quantity" || cartState === "ready") && (
+                <AnimatePresence>
+                  {cartState !== "idle" && (
                     <motion.div
-                      key="qty"
-                      initial={prefersReducedMotion ? undefined : { opacity: 0, x: -8 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 8 }}
-                      transition={springs.snappy}
-                      className="relative"
+                      layout
+                      initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.95, width: 0 }}
+                      animate={{ opacity: 1, scale: 1, width: "8.5rem" }}
+                      exit={{ opacity: 0, scale: 0.95, width: 0 }}
+                      transition={interactionSpring}
+                      className="relative h-10 overflow-hidden"
                     >
-                      <span className="absolute -top-4 left-0 text-[10px] text-muted-foreground/40 tracking-wide">
-                        Select Quantity
-                      </span>
-                      <div className="inline-flex h-9 min-w-[7rem] rounded-lg border border-border overflow-hidden">
-                        {[1, 2, 3].map((n) => (
-                          <button
-                            key={n}
-                            className={`cursor-pointer h-full flex-1 text-sm font-medium transition-colors ${
-                              selectedQty === n
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-background text-foreground hover:bg-muted"
-                            }`}
-                            onClick={() => {
-                              setSelectedQty(n);
-                              setCartState("ready");
-                            }}
+                      <AnimatePresence mode="wait">
+                        {cartState === "quantity" && (
+                          <motion.div
+                            key="qty"
+                            initial={prefersReducedMotion ? undefined : { opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.15 }}
+                            className="absolute inset-0"
                           >
-                            {n}
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                  {cartState === "ready" && (
-                    <motion.div
-                      key="applepay"
-                      initial={prefersReducedMotion ? undefined : { opacity: 0, x: -8 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 8 }}
-                      transition={springs.snappy}
-                    >
-                      <ApplePayButton
-                        type="pay"
-                        buttonStyle="black"
-                        style={{
-                          width: "7rem",
-                          height: "36px",
-                          borderRadius: "0.5rem",
-                        }}
-                      />
+                            <span className="absolute -top-4 left-0 text-[10px] text-muted-foreground/40 tracking-wide">
+                              Select Quantity
+                            </span>
+                            <div className="flex h-10 w-[8.5rem] rounded-lg border border-border overflow-hidden">
+                              {[1, 2, 3].map((n) => (
+                                <button
+                                  key={n}
+                                  className={`cursor-pointer h-full flex-1 text-sm font-medium transition-colors ${
+                                    selectedQty === n
+                                      ? "bg-primary text-primary-foreground"
+                                      : "bg-background text-foreground hover:bg-muted"
+                                  }`}
+                                  onClick={() => {
+                                    setSelectedQty(n);
+                                    setTimeout(() => setCartState("ready"), 180);
+                                  }}
+                                >
+                                  {n}
+                                </button>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                        {cartState === "ready" && (
+                          <motion.div
+                            key="applepay"
+                            initial={prefersReducedMotion ? undefined : { opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2, delay: 0.1 }}
+                            className="absolute inset-0"
+                          >
+                            <ApplePayButton
+                              type="pay"
+                              buttonStyle="black"
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                borderRadius: "0.5rem",
+                              }}
+                            />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
-        </div>
-        <div className="py-4 md:hidden">
-          <Trust />
         </div>
       </div>
     </section>

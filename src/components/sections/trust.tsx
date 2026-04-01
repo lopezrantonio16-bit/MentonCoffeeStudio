@@ -48,7 +48,7 @@ export function Trust() {
     >
       <Bibendum className="w-[14px] md:w-[18px] h-auto text-muted-foreground/50 md:text-muted-foreground/40 shrink-0" />
       <p className="text-[10px] md:text-[11px] tracking-[0.08em] uppercase text-muted-foreground/50 md:text-muted-foreground/40 leading-tight">
-        Served in Restaurants Featured in the{" "}
+        Served at Restaurants Featured in the{" "}
         <span className="font-medium text-muted-foreground/70 md:text-muted-foreground/60">
           Michelin Guide
         </span>
