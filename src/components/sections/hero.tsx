@@ -131,7 +131,7 @@ export function Hero() {
                       animate={{ opacity: 1, scale: 1, width: "8.5rem" }}
                       exit={{ opacity: 0, scale: 0.95, width: 0 }}
                       transition={interactionSpring}
-                      className="relative h-10 overflow-hidden rounded-lg"
+                      className="relative h-10 max-h-10 w-[8.5rem] max-w-[8.5rem] overflow-hidden rounded-lg"
                     >
                       <AnimatePresence mode="wait">
                         {cartState === "quantity" && (
