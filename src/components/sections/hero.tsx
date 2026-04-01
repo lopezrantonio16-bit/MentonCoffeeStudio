@@ -92,7 +92,7 @@ export function Hero() {
                   layout
                   size="lg"
                   transition={interactionSpring}
-                  className={`cursor-pointer w-[8.5rem] h-10 transition-colors duration-200 ${
+                  className={`cursor-pointer w-[8.5rem] transition-colors duration-200 ${
                     cartState === "ready"
                       ? "!bg-[#6366f1] hover:!bg-[#4f46e5]"
                       : ""
