@@ -174,10 +174,14 @@ export function Hero() {
                         transition={{ duration: 0.2, delay: 0.1 }}
                         className="absolute inset-0"
                       >
-                        <style>{`apple-pay-button { display: block !important; width: 100% !important; height: 100% !important; border-radius: 0.5rem !important; }`}</style>
+                        <style>{`apple-pay-button { display: block !important; width: 100% !important; }`}</style>
                         <ApplePayButton
                           type="pay"
                           buttonStyle="black"
+                          style={{
+                            height: "2.5rem",
+                            borderRadius: "0.5rem",
+                          }}
                         />
                       </motion.div>
                     )}
