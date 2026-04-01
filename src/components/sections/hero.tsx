@@ -84,7 +84,7 @@ export function Hero() {
               initial={initial}
               animate={animate ?? visible}
               transition={{ ...springs.smooth, delay: prefersReducedMotion ? 0 : 0.2 }}
-              className="flex items-center gap-3 sm:gap-6"
+              className="flex items-center gap-5 sm:gap-6"
             >
               <span className="text-3xl font-bold tracking-tight">$24</span>
               <div className="flex items-center gap-2 sm:gap-3">
@@ -172,7 +172,7 @@ export function Hero() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2, delay: 0.1 }}
-                        className="absolute inset-0"
+                        className="absolute inset-0 flex items-center justify-center"
                       >
                         <ApplePayButton
                           type="pay"
@@ -180,7 +180,7 @@ export function Hero() {
                           style={{
                             width: "100%",
                             height: "2.5rem",
-                            borderRadius: "0px",
+                            borderRadius: "0.5rem",
                           }}
                         />
                       </motion.div>
