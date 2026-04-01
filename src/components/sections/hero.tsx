@@ -84,10 +84,10 @@ export function Hero() {
               initial={initial}
               animate={animate ?? visible}
               transition={{ ...springs.smooth, delay: prefersReducedMotion ? 0 : 0.2 }}
-              className="flex items-center gap-6"
+              className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6"
             >
               <span className="text-3xl font-bold tracking-tight">$24</span>
-              <motion.div layout transition={interactionSpring} className="flex items-center gap-3">
+              <motion.div layout transition={interactionSpring} className="flex items-center gap-3 flex-wrap">
                 <MotionButton
                   layout
                   size="lg"
