@@ -168,10 +168,10 @@ export function Hero() {
                     {cartState === "ready" && (
                       <motion.div
                         key="applepay"
-                        initial={prefersReducedMotion ? undefined : { opacity: 0, y: 4 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={prefersReducedMotion ? undefined : { opacity: 0 }}
+                        animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ ...springs.gentle, delay: 0.08 }}
+                        transition={springs.smooth}
                         className="absolute inset-0"
                       >
                         <style>{`apple-pay-button { display: block !important; width: 100% !important; }`}</style>
