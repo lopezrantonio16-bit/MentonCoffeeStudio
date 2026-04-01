@@ -1,12 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { CoffeeModel } from "@/components/coffee-model";
 import { springs } from "@/lib/motion";
 import ApplePayButton from "apple-pay-button";
 import { Trust } from "@/components/sections/trust";
+
+const CoffeeModel = dynamic(
+  () => import("@/components/coffee-model").then((mod) => mod.CoffeeModel),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="aspect-square md:aspect-[6/5] max-w-2xl mx-auto flex items-center justify-center">
+        <div className="h-5 w-5 rounded-full border-2 border-foreground/20 border-t-foreground/60 animate-spin" />
+      </div>
+    ),
+  }
+);
 
 const MotionButton = motion.create(Button);
 
