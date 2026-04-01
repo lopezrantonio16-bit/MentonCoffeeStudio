@@ -179,6 +179,7 @@ export function Hero() {
                           type="pay"
                           buttonStyle="black"
                           style={{
+                            width: "100%",
                             height: "2.5rem",
                             borderRadius: "0.5rem",
                           }}
