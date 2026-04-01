@@ -92,7 +92,7 @@ export function Hero() {
                   layout
                   size="lg"
                   transition={interactionSpring}
-                  className={`cursor-pointer w-[8.5rem] transition-colors duration-200 ${
+                  className={`cursor-pointer w-[10rem] transition-colors duration-200 ${
                     cartState === "ready"
                       ? "!bg-[#6366f1] hover:!bg-[#4f46e5]"
                       : ""
@@ -128,10 +128,10 @@ export function Hero() {
                     <motion.div
                       layout
                       initial={prefersReducedMotion ? undefined : { opacity: 0, scale: 0.95, width: 0 }}
-                      animate={{ opacity: 1, scale: 1, width: "8.5rem" }}
+                      animate={{ opacity: 1, scale: 1, width: "auto" }}
                       exit={{ opacity: 0, scale: 0.95, width: 0 }}
                       transition={interactionSpring}
-                      className="relative h-10 max-h-10 w-[8.5rem] max-w-[8.5rem] overflow-hidden rounded-lg"
+                      className="relative overflow-hidden"
                     >
                       <AnimatePresence mode="wait">
                         {cartState === "quantity" && (
@@ -141,12 +141,11 @@ export function Hero() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.15 }}
-                            className="absolute inset-0"
                           >
                             <span className="absolute -top-4 left-0 text-[10px] text-muted-foreground/40 tracking-wide">
                               Select Quantity
                             </span>
-                            <div className="flex h-10 w-[8.5rem] rounded-lg border border-border overflow-hidden">
+                            <div className="flex h-11 w-[10rem] rounded-xl border border-border overflow-hidden">
                               {[1, 2, 3].map((n) => (
                                 <button
                                   key={n}
@@ -173,16 +172,10 @@ export function Hero() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.2, delay: 0.1 }}
-                            className="absolute inset-0"
                           >
                             <ApplePayButton
                               type="pay"
                               buttonStyle="black"
-                              style={{
-                                width: "8.5rem",
-                                height: "2.5rem",
-                                borderRadius: "0px",
-                              }}
                             />
                           </motion.div>
                         )}
