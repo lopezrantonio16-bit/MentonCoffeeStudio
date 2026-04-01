@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { CoffeeModel } from "@/components/coffee-model";
@@ -18,6 +18,17 @@ export function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const [cartState, setCartState] = useState<CartState>("idle");
   const [selectedQty, setSelectedQty] = useState<number | null>(null);
+
+  // Preload Apple Pay SDK so it's ready before checkout state
+  useEffect(() => {
+    const scriptId = "apple-pay-sdk-script";
+    if (document.getElementById(scriptId)) return;
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = "https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   const animate = prefersReducedMotion
     ? { opacity: 1, y: 0, scale: 1 }
