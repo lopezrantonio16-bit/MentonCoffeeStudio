@@ -151,7 +151,7 @@ export function Hero() {
                     opacity: cartState !== "idle" ? 1 : 0,
                   }}
                   transition={interactionSpring}
-                  className={`relative h-10 w-36 sm:w-[8.5rem] overflow-hidden rounded-lg ${
+                  className={`relative h-10 w-36 sm:w-[8.5rem] overflow-visible rounded-lg ${
                     cartState === "idle" ? "pointer-events-none" : ""
                   }`}
                 >
