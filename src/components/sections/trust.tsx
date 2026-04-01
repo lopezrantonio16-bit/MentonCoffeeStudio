@@ -47,12 +47,22 @@ export function Trust() {
       className="flex items-center justify-center gap-2"
     >
       <Bibendum className="w-[14px] md:w-[18px] h-auto text-muted-foreground/50 md:text-muted-foreground/40 shrink-0" />
-      <p className="text-[10px] md:text-[11px] tracking-[0.08em] uppercase text-muted-foreground/50 md:text-muted-foreground/40 leading-tight">
+      <motion.p
+        className="text-[10px] md:text-[11px] tracking-[0.08em] uppercase leading-tight bg-[length:250%_100%] bg-clip-text text-transparent bg-[linear-gradient(90deg,var(--color-muted-foreground)_40%,var(--color-foreground)_50%,var(--color-muted-foreground)_60%)] will-change-[background-position] opacity-50 md:opacity-40"
+        initial={prefersReducedMotion ? undefined : { backgroundPosition: "200% center" }}
+        animate={prefersReducedMotion ? undefined : { backgroundPosition: "-200% center" }}
+        transition={prefersReducedMotion ? undefined : {
+          duration: 3,
+          ease: "linear",
+          repeat: Infinity,
+          repeatDelay: 5,
+        }}
+      >
         Served at Restaurants Featured in the{" "}
-        <span className="font-medium text-muted-foreground/70 md:text-muted-foreground/60">
+        <span className="font-medium">
           Michelin Guide
         </span>
-      </p>
+      </motion.p>
     </motion.div>
   );
 }
