@@ -12,7 +12,9 @@ export default function Home() {
         <Image src="/logo.svg" alt="Menton Coffee Studio" width={128} height={128} className="w-[84px] h-auto md:w-[128px]" priority />
       </div>
       <Hero />
-      <Trust />
+      <div className="hidden md:block px-6 py-4">
+        <Trust />
+      </div>
       <Provenance />
       <TheCup />
       <SiteFooter />

@@ -40,22 +40,19 @@ export function Trust() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="px-6 py-2 md:py-4">
-      <motion.div
-        initial={prefersReducedMotion ? undefined : { opacity: 0 }}
-        whileInView={prefersReducedMotion ? undefined : { opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ ...springs.gentle }}
-        className="mx-auto max-w-4xl flex items-center justify-center gap-2 md:gap-3"
-      >
-        <Bibendum className="w-[14px] md:w-[18px] h-auto text-muted-foreground/50 md:text-muted-foreground/40 shrink-0" />
-        <p className="text-[10px] md:text-[11px] tracking-[0.08em] uppercase text-muted-foreground/50 md:text-muted-foreground/40 leading-tight">
-          Served in Restaurants Featured in the{" "}
-          <span className="font-medium text-muted-foreground/70 md:text-muted-foreground/60">
-            Michelin Guide
-          </span>
-        </p>
-      </motion.div>
-    </section>
+    <motion.div
+      initial={prefersReducedMotion ? undefined : { opacity: 0 }}
+      animate={prefersReducedMotion ? undefined : { opacity: 1 }}
+      transition={{ ...springs.gentle, delay: prefersReducedMotion ? 0 : 0.3 }}
+      className="flex items-center justify-center gap-2"
+    >
+      <Bibendum className="w-[14px] md:w-[18px] h-auto text-muted-foreground/50 md:text-muted-foreground/40 shrink-0" />
+      <p className="text-[10px] md:text-[11px] tracking-[0.08em] uppercase text-muted-foreground/50 md:text-muted-foreground/40 leading-tight">
+        Served in Restaurants Featured in the{" "}
+        <span className="font-medium text-muted-foreground/70 md:text-muted-foreground/60">
+          Michelin Guide
+        </span>
+      </p>
+    </motion.div>
   );
 }
