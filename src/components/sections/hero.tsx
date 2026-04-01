@@ -172,14 +172,15 @@ export function Hero() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2, delay: 0.1 }}
-                        className="absolute inset-0 flex items-center justify-center"
+                        className="absolute inset-0 grid place-items-center"
                       >
                         <ApplePayButton
                           type="pay"
                           buttonStyle="black"
                           style={{
+                            display: "block",
                             width: "100%",
-                            height: "2.5rem",
+                            height: "100%",
                             borderRadius: "0.5rem",
                           }}
                         />
