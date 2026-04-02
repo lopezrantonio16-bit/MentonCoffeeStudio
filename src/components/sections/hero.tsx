@@ -53,7 +53,7 @@ export function Hero() {
   const [selectedQty, setSelectedQty] = useState<number | null>(null);
   const stripeRef = useRef<Stripe | null>(null);
   const paymentRequestRef = useRef<PaymentRequest | null>(null);
-  const [applePayAvailable, setApplePayAvailable] = useState(false);
+
 
   // Initialize Stripe + check Apple Pay availability
   useEffect(() => {
@@ -69,7 +69,6 @@ export function Hero() {
       });
       pr.canMakePayment().then((result) => {
         if (result?.applePay) {
-          setApplePayAvailable(true);
           paymentRequestRef.current = pr;
         }
       });
@@ -241,12 +240,12 @@ export function Hero() {
                 <motion.div
                   initial={false}
                   animate={{
-                    opacity: cartState === "quantity" || (cartState === "ready" && applePayAvailable) ? 1 : 0,
+                    opacity: cartState !== "idle" ? 1 : 0,
                   }}
                   transition={interactionSpring}
                   className={`relative h-10 w-36 sm:w-[8.5rem] overflow-visible rounded-lg ${
-                    cartState === "idle" || (cartState === "ready" && !applePayAvailable) ? "pointer-events-none" : ""
-                  }`}
+                    cartState === "idle" ? "pointer-events-none" : ""
+                  } ${cartState === "ready" ? "md:opacity-0 md:pointer-events-none" : ""}`}
                 >
                   <AnimatePresence mode="wait">
                     {cartState === "quantity" && (
@@ -281,7 +280,7 @@ export function Hero() {
                         </div>
                       </motion.div>
                     )}
-                    {cartState === "ready" && applePayAvailable && (
+                    {cartState === "ready" && (
                       <motion.div
                         key="applepay"
                         initial={prefersReducedMotion ? undefined : { opacity: 0 }}
