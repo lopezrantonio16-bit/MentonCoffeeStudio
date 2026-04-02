@@ -241,11 +241,11 @@ export function Hero() {
                 <motion.div
                   initial={false}
                   animate={{
-                    opacity: cartState !== "idle" ? 1 : 0,
+                    opacity: cartState === "quantity" || (cartState === "ready" && applePayAvailable) ? 1 : 0,
                   }}
                   transition={interactionSpring}
                   className={`relative h-10 w-36 sm:w-[8.5rem] overflow-visible rounded-lg ${
-                    cartState === "idle" ? "pointer-events-none" : ""
+                    cartState === "idle" || (cartState === "ready" && !applePayAvailable) ? "pointer-events-none" : ""
                   }`}
                 >
                   <AnimatePresence mode="wait">
@@ -281,7 +281,7 @@ export function Hero() {
                         </div>
                       </motion.div>
                     )}
-                    {cartState === "ready" && (
+                    {cartState === "ready" && applePayAvailable && (
                       <motion.div
                         key="applepay"
                         initial={prefersReducedMotion ? undefined : { opacity: 0 }}
