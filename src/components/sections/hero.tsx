@@ -26,6 +26,17 @@ type CartState = "idle" | "quantity" | "ready";
 
 const interactionSpring = { type: "spring" as const, stiffness: 300, damping: 30 };
 
+async function redirectToCheckout(quantity: number) {
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ quantity }),
+  });
+  if (!res.ok) return;
+  const { url } = await res.json();
+  if (url) window.location.href = url;
+}
+
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const [cartState, setCartState] = useState<CartState>("idle");
@@ -121,6 +132,7 @@ export function Hero() {
                   }`}
                   onClick={() => {
                     if (cartState === "idle") setCartState("quantity");
+                    if (cartState === "ready" && selectedQty) redirectToCheckout(selectedQty);
                   }}
                   whileHover={
                     prefersReducedMotion
@@ -198,15 +210,22 @@ export function Hero() {
                         className="absolute inset-0"
                       >
                         <style>{`apple-pay-button { display: block !important; width: 100% !important; }`}</style>
-                        <ApplePayButton
-                          type="pay"
-                          buttonStyle="black"
-                          style={{
-                            width: "100%",
-                            height: "2.5rem",
-                            borderRadius: "0.5rem",
-                          }}
-                        />
+                        <div
+                          onClick={() => selectedQty && redirectToCheckout(selectedQty)}
+                          className="cursor-pointer"
+                        >
+                          <div className="pointer-events-none">
+                            <ApplePayButton
+                              type="pay"
+                              buttonStyle="black"
+                              style={{
+                                width: "100%",
+                                height: "2.5rem",
+                                borderRadius: "0.5rem",
+                              }}
+                            />
+                          </div>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
