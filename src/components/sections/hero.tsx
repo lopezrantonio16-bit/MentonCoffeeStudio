@@ -1,10 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { motion, useReducedMotion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { springs } from "@/lib/motion";
+import {
+  loadStripe,
+  type Stripe,
+  type PaymentRequest,
+  type PaymentRequestPaymentMethodEvent,
+} from "@stripe/stripe-js";
 import ApplePayButton from "apple-pay-button";
 import { Trust } from "@/components/sections/trust";
 
@@ -37,12 +43,87 @@ async function redirectToCheckout(quantity: number) {
   if (url) window.location.href = url;
 }
 
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
+
 export function Hero() {
   const prefersReducedMotion = useReducedMotion();
   const [cartState, setCartState] = useState<CartState>("idle");
   const [selectedQty, setSelectedQty] = useState<number | null>(null);
+  const stripeRef = useRef<Stripe | null>(null);
+  const paymentRequestRef = useRef<PaymentRequest | null>(null);
+  const [applePayAvailable, setApplePayAvailable] = useState(false);
 
-  // Preload Apple Pay SDK so it's ready before checkout state
+  // Initialize Stripe + check Apple Pay availability
+  useEffect(() => {
+    stripePromise.then((stripe) => {
+      if (!stripe) return;
+      stripeRef.current = stripe;
+      const pr = stripe.paymentRequest({
+        country: "US",
+        currency: "usd",
+        total: { label: "Ethiopia Yirgacheffe", amount: 2400 },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+      pr.canMakePayment().then((result) => {
+        if (result?.applePay) {
+          setApplePayAvailable(true);
+          paymentRequestRef.current = pr;
+        }
+      });
+    });
+  }, []);
+
+  // Update payment request amount when quantity changes
+  useEffect(() => {
+    if (paymentRequestRef.current && selectedQty) {
+      paymentRequestRef.current.update({
+        total: {
+          label: `Ethiopia Yirgacheffe × ${selectedQty}`,
+          amount: 2400 * selectedQty,
+        },
+      });
+    }
+  }, [selectedQty]);
+
+  const handleApplePay = useCallback(async () => {
+    const pr = paymentRequestRef.current;
+    if (!pr || !selectedQty) return;
+
+    // Listen for the payment method event
+    const handler = async (ev: PaymentRequestPaymentMethodEvent) => {
+      const res = await fetch("/api/payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quantity: selectedQty }),
+      });
+
+      if (!res.ok) {
+        ev.complete("fail");
+        return;
+      }
+
+      const { clientSecret } = await res.json();
+      const stripe = stripeRef.current!;
+      const { error } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: ev.paymentMethod.id,
+      });
+
+      if (error) {
+        ev.complete("fail");
+      } else {
+        ev.complete("success");
+        window.location.href = "/checkout/success";
+      }
+    };
+
+    pr.on("paymentmethod", handler);
+    pr.show();
+  }, [selectedQty]);
+
+  // Preload Apple Pay SDK so button renders
   useEffect(() => {
     const scriptId = "apple-pay-sdk-script";
     if (document.getElementById(scriptId)) return;
@@ -211,7 +292,7 @@ export function Hero() {
                       >
                         <style>{`apple-pay-button { display: block !important; width: 100% !important; }`}</style>
                         <div
-                          onClick={() => selectedQty && redirectToCheckout(selectedQty)}
+                          onClick={handleApplePay}
                           className="cursor-pointer"
                         >
                           <div className="pointer-events-none">
